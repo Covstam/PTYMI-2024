@@ -19,6 +19,7 @@
     <nav class="nav-menu">
       <a href="#about" class="nav-link">About</a>
       <a href="#products" class="nav-link">Products</a>
+      <a href="#clients" class="nav-link">Clients</a>
       <a href="#capability" class="nav-link">Technology</a>
       <a href="#certifications" class="nav-link">Certifications</a>
       <a href="#company-profile" class="nav-link">Company Profile</a>
@@ -126,6 +127,26 @@
         <h3>Mouthwash</h3>
         <p>Antimicrobial mouthwash solution for oral hygiene and therapeutic rinse applications in medical facilities.</p>
         <div class="product-specs">Sterile • Antiseptic formula</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="clients" class="section clients-section gray-bg">
+  <div class="section-container">
+    <div class="section-header">
+      <h2>Our Clients</h2>
+      <p class="section-subtitle">Trusted by leading brands worldwide</p>
+    </div>
+    <div class="clients-grid">
+      <div class="client-logo">
+        <img src="assets/Haidilao Logo.png" alt="Haidilao">
+      </div>
+      <div class="client-logo">
+        <img src="assets/Medline logo.png" alt="Medline">
+      </div>
+      <div class="client-logo">
+        <img src="assets/Dukal_Logo_Primary.png" alt="Dukal">
       </div>
     </div>
   </div>
@@ -322,7 +343,7 @@
             <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
             <div class="contact-content">
               <h4>Address</h4>
-              <p>Kawasan Industri Terpadu<br>Jalan Akasia Unit A24-A29<br>Batang Regency, Central Java 51281<br>Indonesia</p>
+              <p>Kawasan Industri Terpadu<br>Jalan Akasia Blok.A24-A29<br>Batang Regency, Central Java 51281<br>Indonesia</p>
             </div>
           </div>
           <div class="contact-item">
@@ -365,6 +386,10 @@
             <i class="fas fa-paper-plane"></i> Send Message
           </button>
         </form>
+        <div id="postSubmit" style="display:none; margin-top:20px; text-align:center;">
+          <p class="thank-you-message" style="color:var(--success); font-weight:700;">Thank you for your message! We have received your email.</p>
+          <p>If you'd like to send another message, <a href="#" id="resetForm">click here</a>.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -438,7 +463,7 @@
           
           <div class="job-card">
             <div class="job-header">
-              <h4>R&D</h4>
+              <h4>Product Development Engineer</h4>
               <span class="job-type">Full-time</span>
             </div>
             <div class="job-details">
@@ -505,7 +530,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>Designed by <span class="credit-name">Adam, with support from Audrea <3 </span></p>
+    <p>Designed by <span class="credit-name">COVSTAM</span></p>
     <p>&copy; 2026 PT Youmi Medika Industri. All rights reserved.</p>
   </div>
 </footer>
@@ -646,6 +671,71 @@
         });
       }
     });
+  });
+
+  // ==================== SWAB CURSOR - STATIC (NO TRAIL) ====================
+  // Cursor is now a static Q-tip design with no animation for realistic appearance
+</script>
+
+<!-- EmailJS SDK for sending emails directly from the website -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+    emailjs.init('YOUR_USER_ID'); // replace with your EmailJS user ID
+  })();
+</script>
+
+<script type="module">
+  import { fairyDustCursor } from "https://unpkg.com/cursor-effects@latest/dist/esm.js";
+
+  let dustInstance = null;
+  const contactSection = document.getElementById('contact');
+
+  function checkScroll() {
+    if (!dustInstance && window.scrollY + window.innerHeight >= contactSection.offsetTop) {
+      dustInstance = new fairyDustCursor();
+    }
+  }
+
+  window.addEventListener('scroll', checkScroll);
+  // run once in case page loads already below
+  checkScroll();
+</script>
+
+<script>
+  // ===== contact form handler =====
+  // show thank-you and send using EmailJS or similar service (client-side)
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // hide form and show post-submit message
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('postSubmit').style.display = 'block';
+    // prepare data to send
+    const templateParams = {
+      from_name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      message: document.getElementById('message').value
+    };
+    // send using EmailJS (replace with your ids)
+    if (window.emailjs) {
+      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+        .then(function() {
+          console.log('Email sent');
+        }, function(error) {
+          console.error('EmailJS error', error);
+        });
+    }
+  });
+
+  // reset link handler
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'resetForm') {
+      e.preventDefault();
+      document.getElementById('postSubmit').style.display = 'none';
+      document.getElementById('contactForm').style.display = 'block';
+      contactForm.reset();
+    }
   });
 </script>
 
